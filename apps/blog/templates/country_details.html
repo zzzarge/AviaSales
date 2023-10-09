@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="gtco-section">
+  <div class="gtco-container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+        <h2>Most Popular Destination</h2>
+        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+      </div>
+    </div>
+    <div class="row">
+      {% for city in country.cities.all %}
+
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <a href="{{city.image.url}}" class="fh5co-card-item image-popup">
+          <figure>
+            <div class="overlay"><i class="ti-plus"></i></div>
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+             
+              <div class="carousel-inner">
+                {% for image in city.images.all %}
+                <div class="carousel-item active">
+                  <img src="{{image.image.url}}" class="d-block w-100" alt="...">
+                </div>
+                {% endfor %}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </figure>
+          <div class="fh5co-text">
+            <h2>{{city.title}}</h2>
+            <p>{{city.content}}</p>
+            
+          </div>
+        </a>
+        <a href="#"><p><span class="btn btn-primary">More details</span></p></a>
+      </div>
+
+      {% endfor %}
+      
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
