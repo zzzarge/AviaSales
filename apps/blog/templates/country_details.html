@@ -1,14 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'navbar.html' %}
 {% load static %}
 
 {% block content %}
+
 
 <div class="gtco-section">
   <div class="gtco-container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-        <h2>Most Popular Destination</h2>
-        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+        
+        <h2>Города</h2>
+       
       </div>
     </div>
     <div class="row">
@@ -40,11 +42,11 @@
           </figure>
           <div class="fh5co-text">
             <h2>{{city.title}}</h2>
-            <p>{{city.content}}</p>
+            <p>{{city.startdart_payment}}</p>
             
           </div>
         </a>
-        <a href="#"><p><span class="btn btn-primary">More details</span></p></a>
+        <a href="{% url 'city_details' pk=city.pk %}"><p><span class="btn btn-primary">More details</span></p></a>
       </div>
 
       {% endfor %}

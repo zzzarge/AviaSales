@@ -1,0 +1,215 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<!-- <div class="col-lg-4 col-md-4 col-sm-6">
+  <a href="{{city.image.url}}" class="fh5co-card-item image-popup">
+    <figure>
+      <div class="overlay"><i class="ti-plus"></i></div>
+
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+       
+        <div class="carousel-inner">
+          {% for image in city.places.all %}
+          <div class="carousel-item active">
+            <img src="{{image.image.url}}" class="d-block w-100" alt="...">
+          </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </figure>
+    <div class="fh5co-text">
+      <h2>{{city.title}}</h2>
+      <p>{{city.content}}</p>
+    </div>
+    </a>
+    <a href="{% url 'city_details' pk=city.pk %}"><p><span class="btn btn-primary">More details</span></p></a>
+    </div> -->
+
+
+
+
+
+{% block trip %}
+<div class="overlay">
+  <div class="gtco-container">
+    <div class="row">
+      <div class="col-md-12 col-md-offset-0 text-left">
+        
+
+        <div class="row row-mt-15em">
+          <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+            <h1>Планируете поездку в любую точку мира?</h1>	
+          </div>
+          <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+            <div class="form-wrap">
+              <div class="tab">
+                
+                <div class="tab-content">
+                  <div class="tab-content-inner active" data-content="signup">
+                    <h3>Купите билеты в город {{city.title}}</h3>
+                    <form action="#" method="post">
+                      {% csrf_token %}
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <label for="email">Email</label>
+                          <input type="email" id="email" class="form-control" placeholder="{{request.user.email}}" readonly>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <label for="activities">Откуда</label>
+                          <select name="#" id="activities" class="form-control">
+                            {% for c in cities %}
+                            <option value="{{c.title}}" name="departure">{{c.title}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <label for="activities">Билет</label>
+                          <select name="#" id="activities" class="form-control" name="ticket">
+                            {% for ticket in tickets %}
+                            <option value="{{ticket}}">{{ticket.category}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <label for="date-start">Date Travel</label>
+                          <input type="text" id="date-start" class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <input type="submit" class="btn btn-primary btn-block" value="Submit">
+                        </div>
+                      </div>
+                    </form>	
+                  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+            
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+<div class="gtco-section">
+  <div class="gtco-container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+        <h2>популярные места</h2>
+      </div>
+    </div>
+    <div class="row">
+      {% for popular in city.places.all %}
+
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <a href="{{popular.image.url}}" class="fh5co-card-item image-popup">
+          <figure>
+            <div class="overlay"><i class="ti-plus"></i></div>
+
+            <img src="{{popular.image.url}}" alt="Image" class="img-responsive">
+          </figure>
+          </figure>
+        
+      
+        </a>
+        
+
+        <button id="openModalBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Launch static backdrop modal
+        </button>
+
+        <!-- Модальное окно Bootstrap -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Содержимое вашего модального окна -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% endfor %}
+
+
+      <div id='map' width="100%" style='height:400px'></div>
+
+
+<script>
+
+    mapboxgl.accessToken = "pk.eyJ1IjoiZGFzaWZ1ZSIsImEiOiJja2ttbTFuMGkyMzhwMnBxdG82aGl3dGRvIn0.tEADOWakMLngTWCv-gejNQ";
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v10',
+      center: [{{city.lot}}, {{city.lat}}],
+      zoom: 9
+    });
+
+    var placesData = [
+        {% for place in city.places.all %}
+        {
+            coordinates: [{{ place.lat }}, {{ place.lot }}],
+            title: '{{ place.title|escapejs }}',
+        },
+        {% endfor %}
+    ];
+
+
+      var myModal = document.getElementById('myModal')
+  var myInput = document.getElementById('myInput')
+
+  myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus()
+  })
+
+</script>
+
+
+
+
+
+
+{% endblock %}
+
+
+

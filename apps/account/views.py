@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import (
     RegisterForm,
     LoginForm,
+    UserBaseForm,
+
     
 )
 
@@ -44,3 +46,32 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("account:login")
+
+
+@login_required
+def update_profile_view(request):
+    user = request.user
+
+    base_form = UserBaseForm(instance=user)
+   
+
+    if request.method == "POST":
+        base_form = UserBaseForm(data=request.POST, instance=request.user, files=request.FILES)
+       
+
+
+        if base_form.is_valid():
+            base_form.save()
+            
+            return redirect("account:profile", pk=user.pk)
+        return render(request, "edit_profile.html", {"user": user, "base_form": base_form})
+
+
+
+    context = {
+        "user": user,
+        "base_form": base_form,
+        
+    }
+
+    return render(request, "edit_profile.html", context)

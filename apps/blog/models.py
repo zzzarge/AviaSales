@@ -21,10 +21,9 @@ class Country(models.Model):
     
 
 class City(models.Model):
-    county = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="cities", verbose_name="Страна")
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="cities", verbose_name="Страна")
     title = models.CharField("Город", max_length=100)
     content = models.TextField("Контент", null=True, blank=True)
-    price = models.DecimalField("Цена", max_digits=6, decimal_places=2)
     is_available = models.BooleanField("Активно", default=True)
     lat = models.FloatField("Широта", null=True, blank=True)
     lot = models.FloatField("Долгота", null=True, blank=True)
@@ -35,7 +34,39 @@ class City(models.Model):
 
     def __str__(self):
         return self.title
+    
 
+class Ticket(models.Model):
+    BUDGET = "budget"
+    STANDART = "standart"
+    BUISNES = "buisnes"
+
+    TIKET_CHOISES = (
+        (BUDGET, "Budget"),
+        (STANDART, "Standart"),
+        (BUISNES, "Buisnes")
+    )
+
+
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='ticket_purchases')
+    category = models.CharField(max_length=15, choices=TIKET_CHOISES, default=STANDART)
+    budget_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    startdart_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    buisnes_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f"Ticket Purchase for {self.city.title}"
+
+
+class UserTicket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tickets")
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="purchased")
+    departure = models.CharField(max_length=50)
+    date = models.DateField("Date of buing", auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} - {self.ticket.city.title}"
+    
 
 class CityImages(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="images", verbose_name="Город")
@@ -47,6 +78,40 @@ class CityImages(models.Model):
 
     def __str__(self):
         return self.city.title
+    
+
+class PopularPlaces(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="places", verbose_name="Город")
+    image = models.ImageField("Картинка", upload_to="populars/", null=False)
+    title = models.CharField("Известное", max_length=100)
+    content = models.TextField("Контент", null=True, blank=True)
+    lat = models.FloatField("Широта", null=True, blank=True)
+    lot = models.FloatField("Долгота", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "известное"
+        verbose_name_plural = "известные"
+    
+    def __str__(self):
+        return self.city.title
+    
+
+class LocalPlaces(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name="locals", verbose_name="Город")
+    image = models.ImageField("Картинка", upload_to="cities/", null=False)
+    title = models.CharField("Известное", max_length=100)
+    content = models.TextField("Контент", null=True, blank=True)
+    lat = models.FloatField("Широта", null=True, blank=True)
+    lot = models.FloatField("Долгота", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "локальное"
+        verbose_name_plural = "локальные"
+    
+    def __str__(self):
+        return self.city.title
+    
+    
     
 
 class Comment(models.Model):

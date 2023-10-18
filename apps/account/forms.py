@@ -43,10 +43,20 @@ class LoginForm(forms.ModelForm):
 
 
 class UserBaseForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        input_formats=['%Y-%m-%d']
+    )
+    
 
     class Meta:
         model = User
         fields = (
             "first_name",
             "last_name",
+            "image",
+            "date_of_birth",
+            "about"
         )
+
