@@ -50,7 +50,12 @@
 
         <div class="row row-mt-15em">
           <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-            <h1>Планируете поездку в любую точку мира?</h1>	
+            <h1>Купите билеты в город {{city.title}}</h1>	
+            {% for ticket in tickets_list %}
+            {{ticket.category}}
+            {% empty %}
+            <h2>По заданым значениям билетов не нашлось.</h2>
+            {% endfor %}
           </div>
           <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
             <div class="form-wrap">
@@ -58,39 +63,39 @@
                 
                 <div class="tab-content">
                   <div class="tab-content-inner active" data-content="signup">
-                    <h3>Купите билеты в город {{city.title}}</h3>
-                    <form action="#" method="post">
-                      {% csrf_token %}
+                    <form action="{% url 'tickets_list' %}" method="get">
                       <div class="row form-group">
                         <div class="col-md-12">
-                          <label for="email">Email</label>
-                          <input type="email" id="email" class="form-control" placeholder="{{request.user.email}}" readonly>
+                          <label for="activities">Откуда</label>
+                          <select name="departure" id="activities" class="form-control" required>
+                            {% for c in cities %}
+                            <option value="{{c.id}}" name="departure">{{c.title}}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-md-12">
-                          <label for="activities">Откуда</label>
-                          <select name="#" id="activities" class="form-control">
-                            {% for c in cities %}
-                            <option value="{{c.title}}" name="departure">{{c.title}}</option>
-                            {% endfor %}
+                          <label for="activities">Куда</label>
+                          <select name="city" id="activities" class="form-control" readonly>
+                            <option value="{{city.id}}" name="">{{city.title}}</option>
                           </select>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-md-12">
                           <label for="activities">Билет</label>
-                          <select name="#" id="activities" class="form-control" name="ticket">
-                            {% for ticket in tickets %}
-                            <option value="{{ticket}}">{{ticket.category}}</option>
-                            {% endfor %}
+                          <select name="category" id="activities" class="form-control" name="ticket" required>
+                            <option value="budget" name="category">Бюджет</option>
+                            <option value="standart" name="category">Стандарт</option>
+                            <option value="buisnes" name="category">Бизнес</option>
                           </select>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-md-12">
-                          <label for="date-start">Date Travel</label>
-                          <input type="text" id="date-start" class="form-control">
+                          <label for="date-start">Дата</label>
+                          <input type="text" id="date-start" class="form-control" name="date" required>
                         </div>
                       </div>
 

@@ -50,9 +50,9 @@ class Ticket(models.Model):
 
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='ticket_purchases')
     category = models.CharField(max_length=15, choices=TIKET_CHOISES, default=STANDART)
-    budget_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    startdart_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    buisnes_payment = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    payment = models.DecimalField(max_digits=10, decimal_places=2,  null=True, blank=True)
+    date = models.DateField(null=True)
+    departure = models.ForeignKey(City, max_length=50, on_delete=models.CASCADE, related_name='tickets')
 
     def __str__(self):
         return f"Ticket Purchase for {self.city.title}"
@@ -61,8 +61,6 @@ class Ticket(models.Model):
 class UserTicket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tickets")
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="purchased")
-    departure = models.CharField(max_length=50)
-    date = models.DateField("Date of buing", auto_now_add=True)
 
     def __str__(self) -> str:
         return f"{self.user.username} - {self.ticket.city.title}"

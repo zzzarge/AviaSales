@@ -18,49 +18,50 @@
 									<div class="tab-content">
 										<div class="tab-content-inner active" data-content="signup">
 											<h3>Куда полетим?</h3>
-											<form action="#">
+											<form action="{% url 'tickets_list' %}" method="get">
 												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="fullname">Имя</label>
-														<input type="text" id="fullname" class="form-control">
-													</div>
+												  <div class="col-md-12">
+													<label for="activities">Откуда</label>
+													<select name="departure" id="activities" class="form-control">
+													  {% for city in cities %}
+													  <option value="{{city.id}}" name="departure">{{city.title}}</option>
+													  {% endfor %}
+													</select>
+												  </div>
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="activities">Откуда</label>
-														<select name="#" id="activities" class="form-control">
-															<option value="">Бишкек</option>
-															<option value="">Ош</option>
-															<option value="">Москва</option>
-															<option value="">Астана</option>
-														</select>
+													  <label for="activities">Откуда</label>
+													  <select name="city" id="activities" class="form-control">
+														{% for city in cities %}
+														<option value="{{city.id}}" name="departure">{{city.title}}</option>
+														{% endfor %}
+													  </select>
 													</div>
+												  </div>
+												<div class="row form-group">
+												  <div class="col-md-12">
+													<label for="activities">Билет</label>
+													<select name="category" id="activities" class="form-control" name="ticket" required>
+													  <option value="budget" name="category">Бюджет</option>
+													  <option value="standart" name="category">Стандарт</option>
+													  <option value="buisnes" name="category">Бизнес</option>
+													</select>
+												  </div>
 												</div>
 												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="destination">Куда</label>
-														<select name="#" id="destination" class="form-control">
-															<option value="">Сидней</option>
-															<option value="">Нью-Йорк</option>
-															<option value="">Сеул</option>
-															<option value="">Париж</option>
-														</select>
-													</div>
+												  <div class="col-md-12">
+													<label for="date-start">Дата</label>
+													<input type="text" id="date-start" class="form-control" name="date" required>
+												  </div>
 												</div>
-												
+						  
 												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="date-start">Date Travel</label>
-														<input type="text" id="date-start" class="form-control">
-													</div>
+												  <div class="col-md-12">
+													<input type="submit" class="btn btn-primary btn-block" value="Submit">
+												  </div>
 												</div>
-
-												<div class="row form-group">
-													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary btn-block" value="Submit">
-													</div>
-												</div>
-											</form>	
+											  </form>	
 										</div>
 
 										
