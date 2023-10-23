@@ -61,6 +61,7 @@ class Ticket(models.Model):
 class UserTicket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tickets")
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="purchased")
+    
 
     def __str__(self) -> str:
         return f"{self.user.username} - {self.ticket.city.title}"

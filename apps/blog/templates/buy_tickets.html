@@ -1,0 +1,91 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<div class="overlay">
+    <div class="gtco-container">
+        <div class="row">
+            <h1>Заполните информацию для покупки билета</h1>
+            <form class="row g-3" method="post">
+                {% csrf_token %}
+                <div class="col-md-4">
+                  <label for="validationServer01" class="form-label">Имя</label>
+                  <input type="text" class="form-control is-valid" id="validationServer01" name="first_name" value="{{request.user.first_name}}" required>
+                  <div class="valid-feedback">
+                    Хорошо!
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationServer02" class="form-label">Фамилия</label>
+                  <input type="text" class="form-control is-valid" id="validationServer02" name="last_name" value="{{request.user.last_name}}" required>
+                  <div class="valid-feedback">
+                    Хорошо!
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <label for="validationServerEmail04" class="form-label">Email</label>
+                  <div class="input-group has-validation">
+                    <input type="text" class="form-control is-invalid" id="validationServerEmail04" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" name="email" value="{{request.user.email}}" required>
+                    <div id="validationServer04Feedback" class="invalid-feedback">
+                      Пожалуйста введите действительный Email.
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="col-md-4">
+                  <label for="validationServer05" class="form-label">Серия и номер документа:</label>
+                  <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" name="document_id" value="{{request.user.document_id}}" required>
+                  <div id="validationServer03Feedback" class="invalid-feedback">
+                    Пожалуйста введите действительный серию и номер документа.
+                  </div>
+                </div>
+            
+                <div class="col-md-4">
+                  <label for="validationServer06" class="form-label">Код страны:</label>
+                  <input type="text" class="form-control is-invalid" id="validationServer06" aria-describedby="validationServer06Feedback" name="country_code" value="{{request.user.country_code}}" required>
+                  <div id="validationServer06Feedback" class="invalid-feedback">
+                    Пожалуйста введите действительный код страны.
+                  </div>
+                </div>
+            
+                <div class="col-md-4">
+                  <label for="validationServer07" class="form-label">Телефон c кодом:</label>
+                  <input type="text" class="form-control is-invalid" id="validationServer07" aria-describedby="validationServer07Feedback" name="phone_number" value="{{request.user.phone_number}}" required>
+                  <div id="validationServer06Feedback" class="invalid-feedback">
+                    Пожалуйста введите действительный телефон с кодом.
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <label for="validationServer04" class="form-label">Гражданство</label>
+                  <select class="form-select is-invalid" id="validationServer08" aria-describedby="validationServer08Feedback" name="citizenship" required>
+                    <option selected disabled value="{{request.user.citizenship}}" selected>{{request.user.citizenship}}</option>
+                  {% for country in countries %}
+                    <option value="{{country}}">{{country}}</option>
+                  {% endfor %}
+                  </select>
+                  <div id="validationServer04Feedback" class="invalid-feedback">
+                    Пожалуйста введите действительный гражданство.
+                  </div>
+                </div>
+              
+                <div class="col-md-2">
+                    <label>Пол:</label><br>
+                    <input type="radio" id="male" name="gender" value="мужской" >
+                    <label for="male">Мужской</label>
+                    <input type="radio" id="female" name="gender" value="женский">
+                    <label for="female">Женский</label>
+                    <input type="radio" id="other" name="gender" value="другое">
+                    <label for="other">Другое</label>
+                </div>
+               
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Купить</button>
+                </div>
+            </form>
+            {{form.errors}}
+        </div>
+    </div>
+</div>
+{% endblock %}

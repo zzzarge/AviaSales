@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 
 
-from .models import Country, City, Ticket
+from .models import Country, City, Ticket, UserTicket
 from django.contrib import messages
-
+from .forms import UserUpdateForm
+import requests
 
 
 def base_view(request):
@@ -78,17 +80,31 @@ def pricing_view(request):
 
     return render(request, "price.html", context)
 
+@login_required
+def buy_ticket(request, pk):
+    url = "https://restcountries.com/v3.1/all"
 
-# def checce(request, choice_id, city_id ):
-#     city = get_object_or_404(City, pk = city_id)
+    response = requests.get(url=url)
 
-#     form = ChoiceForm()
-#     if form.is_valid():
-#         if form.low == True:
-#             city.price = 500
+    countries = [country['name']['official'] for country in response.json()]
 
-#         elif form.bissines == True:
-#             city.price = 50000
+    print(request.POST, "\n\n\n")
+    form = UserUpdateForm()
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+
+            ticket = get_object_or_404(Ticket, pk=pk)
+            UserTicket.objects.create(
+                ticket = ticket,
+                user=request.user
+            )
+
+            messages.success(request, 'Билет успешно куплен!')
+            return redirect('base_view')  
         
-#         else:
-#             pass
+   
+    
+    return render(request, 'buy_tickets.html', {'form': form, "form": form, 'countries': countries})

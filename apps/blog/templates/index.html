@@ -31,7 +31,7 @@
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
-													  <label for="activities">Откуда</label>
+													  <label for="activities">Куда</label>
 													  <select name="city" id="activities" class="form-control">
 														{% for city in cities %}
 														<option value="{{city.id}}" name="departure">{{city.title}}</option>
@@ -81,6 +81,11 @@
 	<div class="gtco-section">
 		<div class="gtco-container">
 			<div class="row">
+				{% if messages %}
+				{% for message in messages %}
+				{{message}}
+				{% endfor %}
+				{% endif %}
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
 					<h2>Популярные направления</h2>
 					
