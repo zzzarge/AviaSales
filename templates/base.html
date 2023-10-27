@@ -116,7 +116,75 @@
 	{% block content %}
 	{% endblock %}
 
+	<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+			<div class="row row-p	b-md">
 
+				<div class="col-md-4">
+					<div class="gtco-widget">
+						<h3>About Us</h3>
+						<p>Здесь вы можете найти отели в городах куда вы летите. А также можете связаться с нами.</p>
+					</div>
+				</div>
+
+				<div class="col-md-2 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Destination</h3>
+						<ul class="gtco-footer-links">
+							<li><a href="{% url 'seoul_city' %}">Seoul</a></li>
+							<li><a href="{% url 'italy_country' %}">Italy</a></li>
+							<li><a href="{% url 'dubai_city' %}">Dubai</a></li>
+							<li><a href="{% url 'velikobritania_country' %}">Velikobritania</a></li>
+							<li><a href="{% url 'turkey_country' %}">Turkey</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-2 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Hotels</h3>
+						<ul class="gtco-footer-links">
+							<li><a href="{% url 'seoul_hotel' %}">Seoul Hotel</a></li>
+							<li><a href="{% url 'italy_hotel' %}">Italy Hotel</a></li>
+							<li><a href="{% url 'dubai_hotel' %}">Dubai Hotel</a></li>
+							<li><a href="{% url 'velikobritania_hotel' %}">Velikobritania Hotel</a></li>
+							<li><a href="{% url 'turkey_hotel' %}">Turkey Hotel</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Get In Touch</h3>
+						<ul class="gtco-quick-contact">
+							<li><a href="#"><i class="icon-phone"></i> +996 551 000 613</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> uma70v@gmail.com</a></li>
+							<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
+						<small class="block">Designed by <a href="http://GetTemplates.co/" target="_blank">GetTemplates.co</a> Demo Images: <a href="http://unsplash.com/" target="_blank">Unsplash</a></small>
+					</p>
+					<p class="pull-right">
+						<ul class="gtco-social-icons pull-right">
+							<li><a href="{% url 'twitter' %}"><i class="icon-twitter"></i></a></li>
+							<li><a href="{% url 'facebook' %}"><i class="icon-facebook"></i></a></li>
+							<li><a href="{% url 'linkedin' %}"><i class="icon-linkedin"></i></a></li>
+							<li><a href="{% url 'dribbble' %}"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
 
 	
 	
